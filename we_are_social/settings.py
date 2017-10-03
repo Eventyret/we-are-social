@@ -20,14 +20,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '_34saw!bco()q8$4(_5iyik-+nmr+u7jrsfywjq)guc9+j%==c'
+SECRET_KEY = 'cbb3425f3b52a7a77514df10ad263d78'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 SITE_ID = 2
-
+INTERNAL_IPS = ('127.0.0.1', 'localhost',)
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,13 +40,16 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'django_forms_bootstrap',
+    'paypal.standard.ipn',
+    'debug_toolbar',
+    'tinymce',
+    'emoticons',
     'disqus',
     'reusable_blog',
     'home',
     'accounts',
     'paypal_store',
     'products',
-    'paypal.standard.ipn',
     'magazines',
 ]
 
@@ -66,6 +69,8 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
 ]
 
 ROOT_URLCONF = 'we_are_social.urls'
@@ -73,8 +78,7 @@ ROOT_URLCONF = 'we_are_social.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -138,10 +142,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+
+# tinymce settings
+TINYMCE_JS_ROOT = os.path.join(
+    BASE_DIR, "static", 'js', 'tinymce', 'tinymce.min.js')
 
 '''# Stripe environment variables
 STRIPE_PUBLISHABLE = os.getenv('STRIPE_PUBLISHABLE', '<replace this with your stripe publishable code>')
@@ -149,9 +158,10 @@ STRIPE_SECRET = os.getenv('STRIPE_SECRET', '<replace this with your stripe secre
 
 
 # Stripe environment variables
-STRIPE_PUBLISHABLE = os.getenv('STRIPE_PUBLISHABLE', 'pk_test_nbWefqblVg8HnYsFmpcld8qj')
-STRIPE_SECRET = os.getenv('STRIPE_SECRET', 'sk_test_N35jP51CRqW4FKBMa8MAL1A4')
+STRIPE_PUBLISHABLE = os.getenv(
+    'STRIPE_PUBLISHABLE', 'pk_test_glS8jMgA5pjNQ71NhN4hcW3d')
+STRIPE_SECRET = os.getenv('STRIPE_SECRET', 'sk_test_q9IT4r4YHd5SjFoNfvb6Y1pm')
 
 SITE_URL = 'http://127.0.0.1:8000'
-PAYPAL_NOTIFY_URL = 'https://291e2d8f.ngrok.io/a-very-hard-to-guess-url/'
-PAYPAL_RECEIVER_EMAIL = 'aaron@codeinstitute.net'
+PAYPAL_NOTIFY_URL = 'http://3ec22e3f.ngrok.io/paypal-resolve/'
+PAYPAL_RECEIVER_EMAIL = 'simen.dehlin-facilitator@gmail.com'

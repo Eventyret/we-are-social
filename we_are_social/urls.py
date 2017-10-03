@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
+from django.conf import settings
 from django.contrib import admin
 from home import views
 from paypal.standard.ipn import urls as paypal_urls
@@ -35,10 +36,11 @@ urlpatterns = [
 
     # Stripe URLS
     url(r'^cancel_subscription/$', cancel_subscription, name='cancel_subscription'),
-    url(r'^subscriptions_webhook/$', subscriptions_webhook, name='subscriptions_webhook'),
+    url(r'^subscriptions_webhook/$', subscriptions_webhook,
+        name='subscriptions_webhook'),
 
     # Paypal URLs
-    url(r'^a-very-hard-to-guess-url/', include(paypal_urls)),
+    url(r'^paypal-resolve/', include(paypal_urls)),
     url(r'^paypal-return/$', paypal_views.paypal_return),
     url(r'^paypal-cancel/$', paypal_views.paypal_cancel),
     url(r'^products/$', product_views.all_products),
@@ -47,3 +49,6 @@ urlpatterns = [
     # Blog URLs
     url(r'^blog/', include('reusable_blog.urls')),
 ]
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns.append(url(r'^debug/', include(debug_toolbar.urls)))
