@@ -1,7 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-
-# Create your views here.
-from threads.models import Subject, Thread, Post
+from models import Subject, Thread, Post
 from django.shortcuts import redirect
 from django.contrib import messages, auth
 from django.contrib.auth.decorators import login_required
@@ -20,6 +18,4 @@ def forum(request):
 
 def threads(request, subject_id):
     subject = get_object_or_404(Subject, pk=subject_id)
-    return render(reqiest, 'forum/threads.html', {
-        'subject: subject'
-    })
+    return render(request, 'forum/threads.html', {'subject': subject})
