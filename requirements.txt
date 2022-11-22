@@ -5,7 +5,7 @@ Django==1.11.29
 django-emoticons==1.1.2
 django-forms-bootstrap==3.0.1
 django-tinymce==2.2.0
-Pillow==3.1.1
+Pillow==9.3.0
 python-dateutil==2.4.2
 six==1.10.0
 wheel==0.24.0
